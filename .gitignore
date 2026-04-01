@@ -1,0 +1,24 @@
+# Wails / Build
+build/bin
+bin/
+frontend/dist
+
+# Node
+node_modules
+.npm
+frontend/node_modules
+
+# Go
+*.exe
+*.test
+vendor/
+go.sum.tmp
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.bak
+.gemini/
+/tmp/
