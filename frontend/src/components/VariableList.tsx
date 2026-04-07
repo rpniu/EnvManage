@@ -39,25 +39,25 @@ export function VariableList({
   }
 
   return (
-    <div className="flex flex-col rounded-md border border-border bg-card shadow-sm">
-      <div className="grid grid-cols-12 gap-4 border-b border-border p-4 font-semibold text-muted-foreground text-sm uppercase tracking-wider">
+    <div className="flex flex-col rounded-xl border border-white/20 dark:border-white/10 bg-white/40 dark:bg-black/40 backdrop-blur-md shadow-lg overflow-hidden">
+      <div className="grid grid-cols-12 gap-4 border-b border-white/20 dark:border-white/10 p-4 font-semibold text-foreground/80 text-sm uppercase tracking-wider bg-white/20 dark:bg-black/20">
         <div className="col-span-3">变量名</div>
         <div className="col-span-7">变量值 (单击查看完整内容/编辑)</div>
         <div className="col-span-2 text-right">操作</div>
       </div>
-      <div className="divide-y divide-border">
+      <div className="divide-y divide-white/20 dark:divide-white/10">
         {data.map((item, idx) => {
           const isMatch = searchTerm && (item.key.toLowerCase().includes(searchTerm.toLowerCase()) || item.value.toLowerCase().includes(searchTerm.toLowerCase()));
           return (
-            <div key={idx} className={`grid grid-cols-12 gap-4 p-4 items-center transition-colors group ${isMatch ? 'bg-blue-50/50 dark:bg-blue-900/10' : 'hover:bg-muted/30'}`}>
+            <div key={idx} className={`grid grid-cols-12 gap-4 p-4 items-center transition-colors group ${isMatch ? 'bg-blue-500/10 dark:bg-blue-400/20' : 'hover:bg-white/10 dark:hover:bg-white/5'}`}>
               <div className="col-span-3 font-medium text-sm truncate" title={item.key}>
                 <span className={`px-2 py-0.5 rounded text-xs border ${isMatch ? 'bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/50 dark:text-blue-300 dark:border-blue-800' : 'bg-primary/10 text-primary border-primary/20'}`}>
                   {highlightText(item.key, searchTerm)}
                 </span>
               </div>
               <div 
-                className="col-span-7 text-sm text-foreground/80 truncate font-mono cursor-pointer hover:bg-muted/50 p-1 -ml-1 rounded transition-colors" 
-                title="单击进行编辑与查看"
+                className="col-span-7 text-sm text-foreground/90 truncate font-mono cursor-pointer p-2 rounded-lg bg-white/20 dark:bg-black/20 backdrop-blur-md border border-white/30 dark:border-white/10 shadow-sm hover:bg-white/30 dark:hover:bg-black/30 transition-all" 
+                title={item.value}
                 onClick={() => onEdit(item)}
               >
                 {highlightText(item.value, searchTerm)}

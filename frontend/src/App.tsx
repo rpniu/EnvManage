@@ -85,11 +85,11 @@ export default function App() {
   }, [vars, search]);
 
   return (
-    <div className="flex h-screen w-full bg-background text-foreground overflow-hidden font-sans">
+    <div className="flex h-screen w-full bg-gradient-to-br from-pink-500 to-blue-500 text-slate-900 dark:text-gray-100 overflow-hidden font-sans">
       {/* Sidebar */}
-      <div className="w-64 border-r border-border bg-card p-4 flex flex-col gap-4 shadow-sm">
-        <h1 className="text-xl font-black mb-4 flex items-center gap-2 text-primary">
-          <Layers className="text-blue-500" />
+      <div className="w-64 border-r border-border/50 bg-background/80 backdrop-blur-md p-4 flex flex-col gap-4 shadow-sm">
+        <h1 className="text-xl font-black mb-4 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-br from-pink-500 to-blue-500">
+          <Layers className="text-pink-500" />
           EnvManage
         </h1>
         
@@ -118,8 +118,8 @@ export default function App() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col h-full overflow-hidden bg-background">
-        <header className="h-16 border-b border-border flex items-center justify-between px-6 bg-card/50 backdrop-blur">
+      <div className="flex-1 flex flex-col h-full overflow-hidden bg-background/50 backdrop-blur-sm">
+        <header className="h-16 border-b border-border/50 flex items-center justify-between px-6 bg-background/30 backdrop-blur-md">
           <h2 className="text-lg font-semibold tracking-tight">
             {isSystem ? '系统环境变量 (System)' : '用户环境变量 (User)'}
           </h2>
@@ -144,7 +144,7 @@ export default function App() {
                 <Monitor className="h-4 w-4" />
               </Button>
             </div>
-            <Button onClick={() => setEditVar({key: '', value: '', isNew: true})} className="gap-2 shrink-0 bg-blue-600 hover:bg-blue-700 text-white">
+            <Button onClick={() => setEditVar({key: '', value: '', isNew: true})} className="gap-2 shrink-0 bg-gradient-to-r from-pink-500 to-blue-500 hover:opacity-90 text-white border-0">
               <Plus className="h-4 w-4" /> 新建变量
             </Button>
             <Button variant="outline" size="icon" onClick={loadData} disabled={isLoading}>
