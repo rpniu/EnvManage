@@ -10,8 +10,16 @@ permissions:
 
 jobs:
   build-and-release:
-    name: Build & Release for Windows
+    name: Build & Release for ${{ matrix.os }}-${{ matrix.arch }}
     runs-on: windows-latest # 使用 Windows 运行器进行本机编译
+    strategy:
+      matrix:
+        include:
+          - os: windows
+            arch: amd64
+          # 添加更多架构，例如：
+          # - os: windows
+          #   arch: arm64
 
     steps:
       - name: Checkout source code
@@ -32,15 +40,22 @@ jobs:
         
       - name: Install Frontend Dependencies
         working-directory: ./frontend
-        run: npm install
+        shell: pwsh
+        run: |
+          if (Test-Path package-lock.json) { Remove-Item package-lock.json -Force }
+          npm install
 
       - name: Build Windows App
         shell: pwsh
-        run: wails build -platform windows/amd64
+        run: wails build -platform ${{ matrix.os }}/${{ matrix.arch }}
+
+      - name: Rename Release Asset
+        shell: pwsh
+        run: Rename-Item -Path build/bin/EnvManage.exe -NewName "EnvManage-${{ matrix.os }}-${{ matrix.arch }}-${{ github.ref_name }}.exe"
 
       - name: Publish to GitHub Releases
         uses: softprops/action-gh-release@v2
         with:
-          files: build/bin/EnvManage.exe
+          files: build/bin/EnvManage-${{ matrix.os }}-${{ matrix.arch }}-${{ github.ref_name }}.exe
           name: EnvManage ${{ github.ref_name }}
           generate_release_notes: true # 自动根据 commit 生成 Release 记录
