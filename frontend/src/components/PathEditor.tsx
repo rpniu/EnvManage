@@ -21,6 +21,7 @@ export function PathEditor({
   const [selectedIndices, setSelectedIndices] = useState<Set<number>>(new Set());
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+  const [dragEnabledIndex, setDragEnabledIndex] = useState<number | null>(null);
   interface DuplicateInfo {
     index: number;
     originalIndex: number;
@@ -83,6 +84,7 @@ export function PathEditor({
   const handleDragEnd = () => {
     setDraggedIndex(null);
     setDragOverIndex(null);
+    setDragEnabledIndex(null);
   };
 
   const performDrop = (targetIndex: number) => {
@@ -374,7 +376,7 @@ export function PathEditor({
                 )}
                 <div 
                   id={`path-row-${i}`}
-                  draggable 
+                  draggable={dragEnabledIndex === i || draggedIndex === i} 
                   onDragStart={(e) => handleDragStart(e, i)}
                   onDragOver={(e) => handleDragOver(e, i)}
                   onDrop={(e) => handleDrop(e, i)}
@@ -389,7 +391,11 @@ export function PathEditor({
                       'border border-white/10 bg-white/5 dark:bg-black/20 backdrop-blur-md'
                   }`}
                 >
-                  <div className="flex items-center gap-2 pr-3 border-r border-white/10 shrink-0">
+                  <div 
+                    className="flex items-center gap-2 pr-3 border-r border-white/10 shrink-0"
+                    onMouseEnter={() => setDragEnabledIndex(i)}
+                    onMouseLeave={() => setDragEnabledIndex(null)}
+                  >
                     <div className={`text-sm font-mono w-5 text-right select-none ${showWarning ? 'text-destructive font-semibold' : isSearchMatch ? 'text-[#8A4FFF] dark:text-[#F47FFF] font-medium' : 'text-muted-foreground'}`}>
                       {i + 1}
                     </div>
