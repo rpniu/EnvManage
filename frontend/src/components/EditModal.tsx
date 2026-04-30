@@ -21,8 +21,8 @@ export function EditModal({
   const valueMatch = searchTerm && value.toLowerCase().includes(searchTerm.toLowerCase());
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-card w-full max-w-lg rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md p-4">
+      <div className="bg-white/60 dark:bg-black/60 w-full max-w-lg rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200 border border-white/20 backdrop-blur-xl">
         <div className="flex items-center justify-between px-6 py-4 border-b border-border">
           <h3 className="text-lg font-semibold tracking-tight">{initData.isNew ? "新建环境变量" : "编辑环境变量"}</h3>
           <Button variant="ghost" size="icon" onClick={onClose}><X className="h-4 w-4"/></Button>
@@ -50,7 +50,7 @@ export function EditModal({
             />
           </div>
         </div>
-        <div className="px-6 py-4 border-t border-border bg-muted/40 flex justify-end gap-3">
+        <div className="px-6 py-4 border-t border-white/10 bg-white/5 dark:bg-black/5 flex justify-end gap-3">
           <Button variant="outline" onClick={onClose} className="bg-background">取消</Button>
           <Button onClick={() => onSave(key, value)} disabled={!key || !value}>保存变更</Button>
         </div>

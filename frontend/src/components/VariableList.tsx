@@ -39,8 +39,8 @@ export function VariableList({
   }
 
   return (
-    <div className="flex flex-col rounded-xl border border-white/20 dark:border-white/10 bg-white/40 dark:bg-black/40 backdrop-blur-md shadow-lg overflow-hidden">
-      <div className="grid grid-cols-12 gap-4 border-b border-white/20 dark:border-white/10 p-4 font-semibold text-foreground/80 text-sm uppercase tracking-wider bg-white/20 dark:bg-black/20">
+    <div className="flex flex-col rounded-xl border border-white/20 dark:border-white/10 bg-white/10 dark:bg-black/20 backdrop-blur-xl shadow-lg overflow-hidden">
+      <div className="grid grid-cols-12 gap-4 border-b border-white/20 dark:border-white/10 p-4 font-semibold text-foreground/80 text-sm uppercase tracking-wider bg-white/5 dark:bg-black/10">
         <div className="col-span-3">变量名</div>
         <div className="col-span-7">变量值 (单击查看完整内容/编辑)</div>
         <div className="col-span-2 text-right">操作</div>
@@ -49,14 +49,14 @@ export function VariableList({
         {data.map((item, idx) => {
           const isMatch = searchTerm && (item.key.toLowerCase().includes(searchTerm.toLowerCase()) || item.value.toLowerCase().includes(searchTerm.toLowerCase()));
           return (
-            <div key={idx} className={`grid grid-cols-12 gap-4 p-4 items-center transition-colors group ${isMatch ? 'bg-blue-500/10 dark:bg-blue-400/20' : 'hover:bg-white/10 dark:hover:bg-white/5'}`}>
+            <div key={idx} className={`grid grid-cols-12 gap-4 p-4 items-center transition-colors group ${isMatch ? 'bg-[#8A4FFF]/10 dark:bg-[#8A4FFF]/20' : 'hover:bg-white/10 dark:hover:bg-white/5'}`}>
               <div className="col-span-3 font-medium text-sm truncate" title={item.key}>
-                <span className={`px-2 py-0.5 rounded text-xs border ${isMatch ? 'bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/50 dark:text-blue-300 dark:border-blue-800' : 'bg-primary/10 text-primary border-primary/20'}`}>
+                <span className={`px-2 py-0.5 rounded text-xs border ${isMatch ? 'bg-[#8A4FFF]/10 text-[#8A4FFF] border-[#8A4FFF]/30 dark:bg-[#8A4FFF]/20 dark:text-[#F47FFF] dark:border-[#F47FFF]/20' : 'bg-primary/10 text-primary border-primary/20'}`}>
                   {highlightText(item.key, searchTerm)}
                 </span>
               </div>
               <div 
-                className="col-span-7 text-sm text-foreground/90 truncate font-mono cursor-pointer p-2 rounded-lg bg-white/20 dark:bg-black/20 backdrop-blur-md border border-white/30 dark:border-white/10 shadow-sm hover:bg-white/30 dark:hover:bg-black/30 transition-all" 
+                className="col-span-7 text-sm text-foreground/90 truncate font-mono cursor-pointer p-2 rounded-lg bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-sm hover:bg-white/20 dark:hover:bg-black/30 transition-all" 
                 title={item.value}
                 onClick={() => onEdit(item)}
               >

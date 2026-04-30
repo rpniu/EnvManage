@@ -85,11 +85,11 @@ export default function App() {
   }, [vars, search]);
 
   return (
-    <div className="flex h-screen w-full bg-gradient-to-br from-pink-500 to-blue-500 text-slate-900 dark:text-gray-100 overflow-hidden font-sans">
+    <div className="flex h-screen w-full bg-gradient-to-br from-[#F47FFF] via-[#B692FF] to-[#66E1FF] text-slate-900 dark:text-gray-100 overflow-hidden font-sans">
       {/* Sidebar */}
-      <div className="w-64 border-r border-border/50 bg-background/80 backdrop-blur-md p-4 flex flex-col gap-4 shadow-sm">
-        <h1 className="text-xl font-black mb-4 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-br from-pink-500 to-blue-500">
-          <Layers className="text-pink-500" />
+      <div className="w-64 border-r border-white/10 bg-white/10 dark:bg-black/20 backdrop-blur-xl p-4 flex flex-col gap-4 shadow-sm">
+        <h1 className="text-xl font-black mb-4 flex items-center gap-2 text-black dark:text-white">
+          <Layers className="text-black dark:text-white" />
           EnvManage
         </h1>
         
@@ -118,8 +118,8 @@ export default function App() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col h-full overflow-hidden bg-background/50 backdrop-blur-sm">
-        <header className="h-16 border-b border-border/50 flex items-center justify-between px-6 bg-background/30 backdrop-blur-md">
+      <div className="flex-1 flex flex-col h-full overflow-hidden bg-white/5 dark:bg-black/5 backdrop-blur-md">
+        <header className="h-16 border-b border-white/10 flex items-center justify-between px-6 bg-white/10 dark:bg-black/20 backdrop-blur-xl">
           <h2 className="text-lg font-semibold tracking-tight">
             {isSystem ? '系统环境变量 (System)' : '用户环境变量 (User)'}
           </h2>
@@ -144,7 +144,7 @@ export default function App() {
                 <Monitor className="h-4 w-4" />
               </Button>
             </div>
-            <Button onClick={() => setEditVar({key: '', value: '', isNew: true})} className="gap-2 shrink-0 bg-gradient-to-r from-pink-500 to-blue-500 hover:opacity-90 text-white border-0">
+            <Button onClick={() => setEditVar({key: '', value: '', isNew: true})} className="gap-2 shrink-0 bg-gradient-to-r from-[#F47FFF] to-[#66E1FF] hover:opacity-90 text-white border-0 shadow-lg">
               <Plus className="h-4 w-4" /> 新建变量
             </Button>
             <Button variant="outline" size="icon" onClick={loadData} disabled={isLoading}>

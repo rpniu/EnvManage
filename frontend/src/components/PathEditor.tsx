@@ -272,8 +272,8 @@ export function PathEditor({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-card w-full max-w-4xl relative rounded-2xl shadow-2xl flex flex-col max-h-[85vh] overflow-hidden animate-in fade-in zoom-in slide-in-from-bottom-4 duration-300 border border-border">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md p-4">
+      <div className="bg-white/60 dark:bg-black/60 w-full max-w-4xl relative rounded-2xl shadow-2xl flex flex-col max-h-[85vh] overflow-hidden animate-in fade-in zoom-in slide-in-from-bottom-4 duration-300 border border-white/20 backdrop-blur-xl">
         {/* 去重悬浮面板 */}
         {duplicatesFound && (
           <div className="absolute right-4 top-24 bottom-24 w-80 bg-background/95 backdrop-blur-xl border border-border shadow-2xl rounded-2xl z-20 flex flex-col overflow-hidden animate-in slide-in-from-right-8 fade-in duration-300">
@@ -308,7 +308,7 @@ export function PathEditor({
           </div>
         )}
 
-        <div className="flex items-center justify-between px-6 py-5 border-b border-border bg-gradient-to-r from-muted/50 to-background">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-white/10 bg-gradient-to-r from-white/10 to-transparent">
           <div className="flex items-center gap-4">
             <div className="bg-primary/10 p-2.5 rounded-xl text-primary shadow-sm">
               <FolderSearch className="h-6 w-6" />
@@ -367,9 +367,9 @@ export function PathEditor({
                 {/* 插入位置指示线 */}
                 {showDropIndicator && (
                   <div className="absolute -top-[2px] left-0 right-0 z-10 flex items-center pointer-events-none">
-                    <div className="w-3 h-3 rounded-full bg-blue-500 border-2 border-white shadow-md -ml-1.5 shrink-0" />
-                    <div className="flex-1 h-[3px] bg-blue-500 rounded-full shadow-sm" />
-                    <div className="w-3 h-3 rounded-full bg-blue-500 border-2 border-white shadow-md -mr-1.5 shrink-0" />
+                    <div className="w-3 h-3 rounded-full bg-[#8A4FFF] border-2 border-white shadow-md -ml-1.5 shrink-0" />
+                    <div className="flex-1 h-[3px] bg-gradient-to-r from-[#8A4FFF] to-[#66E1FF] rounded-full shadow-sm" />
+                    <div className="w-3 h-3 rounded-full bg-[#66E1FF] border-2 border-white shadow-md -mr-1.5 shrink-0" />
                   </div>
                 )}
                 <div 
@@ -383,14 +383,14 @@ export function PathEditor({
                       isDragging ? 'opacity-30 scale-[0.98]' : 'opacity-100'
                   } ${
                       highlightedIndex === i ? 'ring-2 ring-purple-500 bg-purple-100 dark:bg-purple-900/40 shadow-lg' :
-                      isSelected && !isDragging ? 'ring-2 ring-blue-500 border-transparent bg-blue-50/30 dark:bg-blue-900/20' : 
-                      showWarning ? 'border border-destructive/40 bg-destructive/5' : 
-                      isSearchMatch ? 'border border-blue-400 bg-blue-100 dark:bg-blue-900/40' : 
-                      'border border-border bg-card'
+                      isSelected && !isDragging ? 'ring-2 ring-[#8A4FFF] border-transparent bg-[#8A4FFF]/10 dark:bg-[#8A4FFF]/20 backdrop-blur-md' : 
+                      showWarning ? 'border border-destructive/40 bg-destructive/10 backdrop-blur-md' : 
+                      isSearchMatch ? 'border border-[#8A4FFF]/50 bg-[#8A4FFF]/10 dark:bg-[#8A4FFF]/20 backdrop-blur-md' : 
+                      'border border-white/10 bg-white/5 dark:bg-black/20 backdrop-blur-md'
                   }`}
                 >
-                  <div className="flex items-center gap-2 pr-3 border-r border-border shrink-0">
-                    <div className={`text-sm font-mono w-5 text-right select-none ${showWarning ? 'text-destructive font-semibold' : isSearchMatch ? 'text-blue-950 dark:text-blue-100 font-medium' : 'text-muted-foreground'}`}>
+                  <div className="flex items-center gap-2 pr-3 border-r border-white/10 shrink-0">
+                    <div className={`text-sm font-mono w-5 text-right select-none ${showWarning ? 'text-destructive font-semibold' : isSearchMatch ? 'text-[#8A4FFF] dark:text-[#F47FFF] font-medium' : 'text-muted-foreground'}`}>
                       {i + 1}
                     </div>
                     <div className="cursor-grab active:cursor-grabbing text-muted-foreground/50 hover:text-primary transition-colors">
@@ -407,7 +407,7 @@ export function PathEditor({
                       onChange={e => updatePath(i, e.target.value)} 
                       draggable={false}
                       onDragStart={(e) => e.stopPropagation()}
-                      className={`h-10 font-mono text-sm border-0 focus-visible:ring-1 bg-transparent shadow-none w-full ${showWarning ? 'text-destructive font-semibold' : isSearchMatch ? 'text-blue-950 dark:text-blue-100 font-medium' : ''}`}
+                      className={`h-10 font-mono text-sm border-0 focus-visible:ring-1 bg-transparent shadow-none w-full ${showWarning ? 'text-destructive font-semibold' : isSearchMatch ? 'text-[#8A4FFF] dark:text-[#F47FFF] font-medium' : ''}`}
                       title={p}
                     />
                     {showWarning && (
@@ -430,7 +430,7 @@ export function PathEditor({
           {/* 列表末尾的拖放目标区域 */}
           {draggedIndex !== null && (
             <div 
-              className="h-16 rounded-xl border-2 border-dashed border-blue-300 dark:border-blue-700 bg-blue-50/30 dark:bg-blue-900/10 flex items-center justify-center text-sm text-blue-500 mt-1 transition-all"
+              className="h-16 rounded-xl border-2 border-dashed border-[#8A4FFF]/40 dark:border-[#8A4FFF]/30 bg-[#8A4FFF]/5 dark:bg-[#8A4FFF]/10 flex items-center justify-center text-sm text-[#8A4FFF] mt-1 transition-all"
               onDragOver={(e) => { e.preventDefault(); setDragOverIndex(paths.length); }}
               onDrop={(e) => { e.preventDefault(); performDrop(paths.length - 1); }}
             >
