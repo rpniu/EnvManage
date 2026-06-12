@@ -45,7 +45,7 @@ jobs:
         run: |
           if (Test-Path package-lock.json) { Remove-Item package-lock.json -Force }
           if (Test-Path node_modules)     { Remove-Item node_modules -Recurse -Force }
-          npm install
+          npm install --force
 
       - name: Build Windows App
         shell: pwsh
