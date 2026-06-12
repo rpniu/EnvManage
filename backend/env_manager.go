@@ -15,10 +15,11 @@ func NewEnvManager() *EnvManager {
 	return &EnvManager{}
 }
 
-// EnvVar 存储单个环境变量的键值对
+// EnvVar 存储单个环境变量的键值对及层级信息
 type EnvVar struct {
-	Key   string `json:"key"`
-	Value string `json:"value"`
+	Key      string `json:"key"`
+	Value    string `json:"value"`
+	IsSystem bool   `json:"isSystem"`
 }
 
 // GetVariables 获取系统或用户层级的环境变量。
@@ -45,7 +46,7 @@ func (e *EnvManager) GetVariables(isSystem bool) ([]EnvVar, error) {
 	for _, name := range names {
 		val, _, err := k.GetStringValue(name)
 		if err == nil {
-			vars = append(vars, EnvVar{Key: name, Value: val})
+			vars = append(vars, EnvVar{Key: name, Value: val, IsSystem: isSystem})
 		}
 	}
 	return vars, nil
@@ -121,3 +122,61 @@ func (e *EnvManager) CheckPathExists(pathStr string) bool {
 	_, err := os.Stat(expanded)
 	return err == nil
 }
+
+// IsAdmin 检查当前程序是否拥有管理员权限（以写入 LOCAL_MACHINE 注册表为标准）
+func (e *EnvManager) IsAdmin() bool {
+	k, err := registry.OpenKey(registry.LOCAL_MACHINE, `SYSTEM\CurrentControlSet\Control\Session Manager\Environment`, registry.SET_VALUE)
+	if err == nil {
+		k.Close()
+		return true
+	}
+	return false
+}
+
+// SetVariables 批量设置环境变量
+func (e *EnvManager) SetVariables(isSystem bool, vars []EnvVar) error {
+	var k registry.Key
+	var err error
+	if isSystem {
+		k, err = registry.OpenKey(registry.LOCAL_MACHINE, `SYSTEM\CurrentControlSet\Control\Session Manager\Environment`, registry.SET_VALUE)
+	} else {
+		k, err = registry.OpenKey(registry.CURRENT_USER, `Environment`, registry.SET_VALUE)
+	}
+	if err != nil {
+		return err
+	}
+	defer k.Close()
+
+	for _, v := range vars {
+		if strings.Contains(v.Value, "%") {
+			err = k.SetExpandStringValue(v.Key, v.Value)
+		} else {
+			err = k.SetStringValue(v.Key, v.Value)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// DeleteVariables 批量删除环境变量
+func (e *EnvManager) DeleteVariables(isSystem bool, keys []string) error {
+	var k registry.Key
+	var err error
+	if isSystem {
+		k, err = registry.OpenKey(registry.LOCAL_MACHINE, `SYSTEM\CurrentControlSet\Control\Session Manager\Environment`, registry.SET_VALUE)
+	} else {
+		k, err = registry.OpenKey(registry.CURRENT_USER, `Environment`, registry.SET_VALUE)
+	}
+	if err != nil {
+		return err
+	}
+	defer k.Close()
+
+	for _, key := range keys {
+		_ = k.DeleteValue(key) // Ignore error if it doesn't exist
+	}
+	return nil
+}
+

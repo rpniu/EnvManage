@@ -5,3 +5,27 @@
 export function Greet(arg1) {
   return window['go']['main']['App']['Greet'](arg1);
 }
+
+export function OpenFileDialog(arg1) {
+  return window['go']['main']['App']['OpenFileDialog'](arg1);
+}
+
+export function OpenFileLocation(arg1) {
+  return window['go']['main']['App']['OpenFileLocation'](arg1);
+}
+
+export function ReadFileContent(arg1) {
+  return window['go']['main']['App']['ReadFileContent'](arg1);
+}
+
+export function SaveFileDialog(arg1, arg2) {
+  return window['go']['main']['App']['SaveFileDialog'](arg1, arg2);
+}
+
+export function SelectDirectory() {
+  return window['go']['main']['App']['SelectDirectory']();
+}
+
+export function WriteFileContent(arg1, arg2) {
+  return window['go']['main']['App']['WriteFileContent'](arg1, arg2);
+}

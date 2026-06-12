@@ -8,6 +8,12 @@ export function CheckPathExists(arg1:string):Promise<boolean>;
 
 export function DeleteVariable(arg1:boolean,arg2:string):Promise<void>;
 
+export function DeleteVariables(arg1:boolean,arg2:Array<string>):Promise<void>;
+
 export function GetVariables(arg1:boolean):Promise<Array<backend.EnvVar>>;
 
+export function IsAdmin():Promise<boolean>;
+
 export function SetVariable(arg1:boolean,arg2:string,arg3:string):Promise<void>;
+
+export function SetVariables(arg1:boolean,arg2:Array<backend.EnvVar>):Promise<void>;

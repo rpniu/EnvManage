@@ -14,10 +14,22 @@ export function DeleteVariable(arg1, arg2) {
   return window['go']['backend']['EnvManager']['DeleteVariable'](arg1, arg2);
 }
 
+export function DeleteVariables(arg1, arg2) {
+  return window['go']['backend']['EnvManager']['DeleteVariables'](arg1, arg2);
+}
+
 export function GetVariables(arg1) {
   return window['go']['backend']['EnvManager']['GetVariables'](arg1);
 }
 
+export function IsAdmin() {
+  return window['go']['backend']['EnvManager']['IsAdmin']();
+}
+
 export function SetVariable(arg1, arg2, arg3) {
   return window['go']['backend']['EnvManager']['SetVariable'](arg1, arg2, arg3);
+}
+
+export function SetVariables(arg1, arg2) {
+  return window['go']['backend']['EnvManager']['SetVariables'](arg1, arg2);
 }

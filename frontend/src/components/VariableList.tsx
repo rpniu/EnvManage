@@ -35,39 +35,39 @@ export function VariableList({
   };
 
   if (!data || data.length === 0) {
-    return <div className="text-center py-20 text-muted-foreground">未找到任何环境变量。</div>;
+    return <div className="text-center py-20 text-slate-400">未找到任何环境变量。</div>;
   }
 
   return (
-    <div className="flex flex-col rounded-xl border border-white/20 dark:border-white/10 bg-white/10 dark:bg-black/20 backdrop-blur-xl shadow-lg overflow-hidden">
-      <div className="grid grid-cols-12 gap-4 border-b border-white/20 dark:border-white/10 p-4 font-semibold text-foreground/80 text-sm uppercase tracking-wider bg-white/5 dark:bg-black/10">
-        <div className="col-span-3">变量名</div>
-        <div className="col-span-7">变量值 (单击查看完整内容/编辑)</div>
+    <div className="flex flex-col rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm overflow-hidden">
+      <div className="grid grid-cols-12 gap-4 border-b border-slate-200 dark:border-slate-800 p-4 font-semibold text-slate-500 text-xs uppercase tracking-wider bg-slate-50/80 dark:bg-slate-900/80">
+        <div className="col-span-3">变量名 (Key)</div>
+        <div className="col-span-7">变量值 (Value)</div>
         <div className="col-span-2 text-right">操作</div>
       </div>
-      <div className="divide-y divide-white/20 dark:divide-white/10">
+      <div className="divide-y divide-slate-100 dark:divide-slate-800">
         {data.map((item, idx) => {
           const isMatch = searchTerm && (item.key.toLowerCase().includes(searchTerm.toLowerCase()) || item.value.toLowerCase().includes(searchTerm.toLowerCase()));
           return (
-            <div key={idx} className={`grid grid-cols-12 gap-4 p-4 items-center transition-colors group ${isMatch ? 'bg-[#8A4FFF]/10 dark:bg-[#8A4FFF]/20' : 'hover:bg-white/10 dark:hover:bg-white/5'}`}>
-              <div className="col-span-3 font-medium text-sm truncate" title={item.key}>
-                <span className={`px-2 py-0.5 rounded text-xs border ${isMatch ? 'bg-[#8A4FFF]/10 text-[#8A4FFF] border-[#8A4FFF]/30 dark:bg-[#8A4FFF]/20 dark:text-[#F47FFF] dark:border-[#F47FFF]/20' : 'bg-primary/10 text-primary border-primary/20'}`}>
+            <div key={idx} className={`grid grid-cols-12 gap-4 p-3.5 items-center transition-colors group ${isMatch ? 'bg-indigo-50/30 dark:bg-indigo-950/10' : 'hover:bg-slate-50/50 dark:hover:bg-slate-800/10'}`}>
+              <div className="col-span-3 font-semibold text-sm truncate" title={item.key}>
+                <span className={`px-2 py-0.5 rounded text-xs border font-mono ${isMatch ? 'bg-indigo-100/50 border-indigo-200 text-indigo-700 dark:bg-indigo-900/20 dark:border-indigo-900 dark:text-indigo-400' : 'bg-slate-100 dark:bg-slate-850 text-slate-700 dark:text-slate-350 border-slate-200 dark:border-slate-800'}`}>
                   {highlightText(item.key, searchTerm)}
                 </span>
               </div>
               <div 
-                className="col-span-7 text-sm text-foreground/90 truncate font-mono cursor-pointer p-2 rounded-lg bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-sm hover:bg-white/20 dark:hover:bg-black/30 transition-all" 
+                className="col-span-7 text-xs text-slate-600 dark:text-slate-400 truncate font-mono cursor-pointer p-2 rounded-lg bg-slate-50/50 dark:bg-slate-950/40 border border-slate-100 dark:border-slate-850 shadow-none hover:bg-slate-100 dark:hover:bg-slate-850 transition-colors" 
                 title={item.value}
                 onClick={() => onEdit(item)}
               >
                 {highlightText(item.value, searchTerm)}
               </div>
-              <div className="col-span-2 flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <Button variant="ghost" size="icon" className="h-8 w-8 text-blue-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/40" onClick={() => onEdit(item)}>
-                  {item.key.toLowerCase() === 'path' ? <FolderEdit className="h-4 w-4" /> : <Edit className="h-4 w-4" />}
+              <div className="col-span-2 flex justify-end gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400" onClick={() => onEdit(item)}>
+                  {item.key.toLowerCase() === 'path' ? <FolderEdit className="h-4.5 w-4.5" /> : <Edit className="h-4.5 w-4.5" />}
                 </Button>
-                <Button variant="ghost" size="icon" className="h-8 w-8 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/40" onClick={() => onDelete(item.key)}>
-                  <Trash2 className="h-4 w-4" />
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-500 hover:text-red-500" onClick={() => onDelete(item.key)}>
+                  <Trash2 className="h-4.5 w-4.5" />
                 </Button>
               </div>
             </div>
@@ -77,3 +77,4 @@ export function VariableList({
     </div>
   );
 }
+
