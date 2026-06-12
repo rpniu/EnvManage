@@ -1,6 +1,7 @@
 name: Build and Release
 
 on:
+  workflow_dispatch: # 允许在 GitHub Actions 页面手动触发发布
   push:
     tags:
       - 'v*' # 只有推送以 v 开头的 tag（例如 v1.0.0）时触发工作流
@@ -43,6 +44,7 @@ jobs:
         shell: pwsh
         run: |
           if (Test-Path package-lock.json) { Remove-Item package-lock.json -Force }
+          if (Test-Path node_modules)     { Remove-Item node_modules -Recurse -Force }
           npm install
 
       - name: Build Windows App
