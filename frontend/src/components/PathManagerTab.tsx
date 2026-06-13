@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Trash2, FolderOpen, AlertTriangle, CheckCircle, RefreshCw, Sparkles, Check, ToggleLeft, ToggleRight, GripVertical } from 'lucide-react';
+import { Plus, Trash2, FolderOpen, AlertTriangle, CheckCircle, RefreshCw, Sparkles, Check, ToggleLeft, ToggleRight, GripVertical, User, ShieldAlert } from 'lucide-react';
 import { GetVariables, SetVariable, BroadcastChange, CheckPathExists } from "../../wailsjs/go/backend/EnvManager";
 import { GetDisabledPaths, SetDisabledPaths } from "../../wailsjs/go/backend/DataManager";
 import { SelectDirectory } from "../../wailsjs/go/main/App";
@@ -259,18 +259,30 @@ export function PathManagerTab() {
         </div>
         
         <div className="flex items-center gap-2">
-          <div className="flex rounded-lg border border-slate-200 dark:border-slate-800 p-0.5 bg-slate-100/50 dark:bg-slate-900/50">
+          <div className="flex rounded-xl border-2 border-slate-200 dark:border-slate-800 p-1 bg-slate-100/50 dark:bg-slate-900/50 shadow-sm">
             <button
               onClick={() => setIsSystem(false)}
-              className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all ${!isSystem ? 'bg-white dark:bg-slate-800 shadow-sm text-slate-900 dark:text-slate-100' : 'text-slate-500 hover:text-slate-900 dark:hover:text-slate-100'}`}
+              title="切换到用户级 PATH 变量"
+              className={`flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-lg transition-all ${
+                !isSystem
+                  ? 'bg-blue-500 text-white shadow-md scale-[1.02]'
+                  : 'text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-200/50 dark:hover:bg-slate-800/50'
+              }`}
             >
-              用户 PATH (User)
+              <User className="h-4 w-4" />
+              用户 PATH
             </button>
             <button
               onClick={() => setIsSystem(true)}
-              className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all ${isSystem ? 'bg-white dark:bg-slate-800 shadow-sm text-slate-900 dark:text-slate-100' : 'text-slate-500 hover:text-slate-900 dark:hover:text-slate-100'}`}
+              title="切换到系统级 PATH 变量（需管理员权限）"
+              className={`flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-lg transition-all ${
+                isSystem
+                  ? 'bg-amber-500 text-white shadow-md scale-[1.02]'
+                  : 'text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-200/50 dark:hover:bg-slate-800/50'
+              }`}
             >
-              系统 PATH (System)
+              <ShieldAlert className="h-4 w-4" />
+              系统 PATH
             </button>
           </div>
 

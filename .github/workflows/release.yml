@@ -6,6 +6,9 @@ on:
     tags:
       - 'v*' # 只有推送以 v 开头的 tag（例如 v1.0.0）时触发工作流
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 permissions:
   contents: write # 允许 GitHub Actions 自动创建 Release
 

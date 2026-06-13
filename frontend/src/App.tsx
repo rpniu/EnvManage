@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { Search, Plus, RefreshCw, Layers, Sun, Moon, Monitor, FolderKanban, ShieldAlert, ShieldCheck, Award, Settings, Shield, Download, Upload, ChevronDown, BookOpen, Copy, CheckCheck, FolderOpen, MapPin, FileJson } from 'lucide-react';
+import { Search, Plus, RefreshCw, Layers, Sun, Moon, Monitor, FolderKanban, ShieldAlert, ShieldCheck, Award, Settings, Shield, Download, Upload, ChevronDown, BookOpen, Copy, CheckCheck, FolderOpen, MapPin, FileJson, User } from 'lucide-react';
 import { GetVariables, DeleteVariable, SetVariable, BroadcastChange, IsAdmin } from "../wailsjs/go/backend/EnvManager";
 import { SaveFileDialog, OpenFileDialog, WriteFileContent, ReadFileContent, OpenFileLocation } from "../wailsjs/go/main/App";
 import { GetConfigPath } from "../wailsjs/go/backend/DataManager";
@@ -20,7 +20,7 @@ import { SnapshotManagerTab } from './components/SnapshotManagerTab';
 type TabType = "variables" | "path" | "profiles" | "templates" | "snapshots" | "guide";
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<TabType>("variables");
+  const [activeTab, setActiveTab] = useState<TabType>("guide");
   const [isSystem, setIsSystem] = useState(false);
   const [vars, setVars] = useState<backend.EnvVar[]>([]);
   const [search, setSearch] = useState("");
@@ -324,18 +324,30 @@ export default function App() {
           /* ENVIRONMENT VARIABLES VIEW */
           <>
             <header className="h-16 border-b border-slate-200 dark:border-slate-850 flex items-center justify-between px-6 bg-white dark:bg-slate-900 shrink-0">
-              <div className="flex rounded-lg border border-slate-200 dark:border-slate-800 p-0.5 bg-slate-100/50 dark:bg-slate-900/50">
+              <div className="flex rounded-xl border-2 border-slate-200 dark:border-slate-800 p-1 bg-slate-100/50 dark:bg-slate-900/50 shadow-sm">
                 <button
                   onClick={() => setIsSystem(false)}
-                  className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${!isSystem ? 'bg-white dark:bg-slate-800 shadow-sm text-slate-900 dark:text-slate-100' : 'text-slate-500'}`}
+                  title="切换到用户级环境变量"
+                  className={`flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-lg transition-all ${
+                    !isSystem
+                      ? 'bg-blue-500 text-white shadow-md scale-[1.02]'
+                      : 'text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-200/50 dark:hover:bg-slate-800/50'
+                  }`}
                 >
-                  用户变量 (User)
+                  <User className="h-4 w-4" />
+                  用户变量
                 </button>
                 <button
                   onClick={() => setIsSystem(true)}
-                  className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${isSystem ? 'bg-white dark:bg-slate-800 shadow-sm text-slate-900 dark:text-slate-100' : 'text-slate-500'}`}
+                  title="切换到系统级环境变量（需管理员权限）"
+                  className={`flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-lg transition-all ${
+                    isSystem
+                      ? 'bg-amber-500 text-white shadow-md scale-[1.02]'
+                      : 'text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-200/50 dark:hover:bg-slate-800/50'
+                  }`}
                 >
-                  系统变量 (System)
+                  <ShieldAlert className="h-4 w-4" />
+                  系统变量
                 </button>
               </div>
 
@@ -413,7 +425,24 @@ export default function App() {
           /* CONFIG GUIDE VIEW */
           <div className="flex-1 overflow-auto p-6">
             <div className="max-w-2xl mx-auto space-y-6 text-sm text-slate-700 dark:text-slate-300">
-              {/* Section 0: Config File Location */}
+              {/* Section 0: Workflow - First! */}
+              <section className="p-4 rounded-xl bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-950/30 dark:to-teal-950/30 border border-emerald-200 dark:border-emerald-800">
+                <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-black">★</span>
+                  推荐工作流
+                </h3>
+                <div className="flex items-center gap-2 flex-wrap text-xs">
+                  <span className="px-3 py-1.5 bg-blue-100 dark:bg-blue-950/60 text-blue-800 dark:text-blue-200 rounded-full font-bold border border-blue-200 dark:border-blue-800">1. 创建快照备份</span>
+                  <span className="text-slate-400 font-bold text-base">&rarr;</span>
+                  <span className="px-3 py-1.5 bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-200 rounded-full font-bold border border-indigo-200 dark:border-indigo-800">2. 导入配置文件</span>
+                  <span className="text-slate-400 font-bold text-base">&rarr;</span>
+                  <span className="px-3 py-1.5 bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-200 rounded-full font-bold border border-emerald-200 dark:border-emerald-800">3. 检查变更</span>
+                  <span className="text-slate-400 font-bold text-base">&rarr;</span>
+                  <span className="px-3 py-1.5 bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-200 rounded-full font-bold border border-amber-200 dark:border-amber-800">4. 如有问题可回滚快照</span>
+                </div>
+              </section>
+
+              {/* Section 1: Config File Location */}
               <section className="p-4 rounded-xl bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-950/30 dark:to-blue-950/30 border border-indigo-200 dark:border-indigo-800">
                 <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-1 flex items-center gap-2">
                   <FileJson className="h-5 w-5 text-indigo-500" />
@@ -444,19 +473,17 @@ export default function App() {
                   </div>
                 )}
               </section>
-              {/* Section 1: Format */}
+              {/* Section 2: Format */}
               <section>
-                <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-2 flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xs font-black">1</span>
+                <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-2">
                   文件格式
                 </h3>
                 <p>配置文件为 <code className="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-800 rounded text-xs font-mono text-indigo-600 dark:text-indigo-400">.json</code> 格式，内容是一个 JSON 数组，每个元素代表一个环境变量。</p>
               </section>
 
-              {/* Section 2: Fields */}
+              {/* Section 3: Fields */}
               <section>
-                <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-2 flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xs font-black">2</span>
+                <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-2">
                   字段说明
                 </h3>
                 <div className="space-y-2">
@@ -484,10 +511,9 @@ export default function App() {
                 </div>
               </section>
 
-              {/* Section 3: Example */}
+              {/* Section 4: Example */}
               <section>
-                <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-2 flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xs font-black">3</span>
+                <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-2">
                   示例文件
                 </h3>
                 <div className="relative">
@@ -513,10 +539,9 @@ export default function App() {
                 )}
               </section>
 
-              {/* Section 4: Tips */}
+              {/* Section 5: Tips */}
               <section>
-                <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-2 flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xs font-black">4</span>
+                <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-2">
                   导入须知
                 </h3>
                 <ul className="space-y-1.5 list-none pl-0">
@@ -539,22 +564,7 @@ export default function App() {
                 </ul>
               </section>
 
-              {/* Section 5: Workflow */}
-              <section>
-                <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-2 flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xs font-black">5</span>
-                  推荐工作流
-                </h3>
-                <div className="flex items-center gap-2 flex-wrap text-xs">
-                  <span className="px-3 py-1.5 bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 rounded-full font-semibold">1. 创建快照备份</span>
-                  <span className="text-slate-400">&rarr;</span>
-                  <span className="px-3 py-1.5 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 rounded-full font-semibold">2. 导入配置文件</span>
-                  <span className="text-slate-400">&rarr;</span>
-                  <span className="px-3 py-1.5 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 rounded-full font-semibold">3. 检查变更</span>
-                  <span className="text-slate-400">&rarr;</span>
-                  <span className="px-3 py-1.5 bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 rounded-full font-semibold">4. 如有问题可回滚快照</span>
-                </div>
-              </section>
+
             </div>
           </div>
         ) : (

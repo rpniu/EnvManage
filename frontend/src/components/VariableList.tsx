@@ -39,8 +39,8 @@ export function VariableList({
   }
 
   return (
-    <div className="flex flex-col rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm overflow-hidden">
-      <div className="grid grid-cols-12 gap-4 border-b border-slate-200 dark:border-slate-800 p-4 font-semibold text-slate-500 text-xs uppercase tracking-wider bg-slate-50/80 dark:bg-slate-900/80">
+    <div className="flex flex-col rounded-xl border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-md overflow-hidden">
+      <div className="grid grid-cols-12 gap-4 border-b-2 border-slate-200 dark:border-slate-800 px-5 py-4 font-bold text-slate-600 dark:text-slate-300 text-sm uppercase tracking-wider bg-slate-100/80 dark:bg-slate-900/80">
         <div className="col-span-3">变量名 (Key)</div>
         <div className="col-span-7">变量值 (Value)</div>
         <div className="col-span-2 text-right">操作</div>
@@ -49,25 +49,25 @@ export function VariableList({
         {data.map((item, idx) => {
           const isMatch = searchTerm && (item.key.toLowerCase().includes(searchTerm.toLowerCase()) || item.value.toLowerCase().includes(searchTerm.toLowerCase()));
           return (
-            <div key={idx} className={`grid grid-cols-12 gap-4 p-3.5 items-center transition-colors group ${isMatch ? 'bg-indigo-50/30 dark:bg-indigo-950/10' : 'hover:bg-slate-50/50 dark:hover:bg-slate-800/10'}`}>
-              <div className="col-span-3 font-semibold text-sm truncate" title={item.key}>
-                <span className={`px-2 py-0.5 rounded text-xs border font-mono ${isMatch ? 'bg-indigo-100/50 border-indigo-200 text-indigo-700 dark:bg-indigo-900/20 dark:border-indigo-900 dark:text-indigo-400' : 'bg-slate-100 dark:bg-slate-850 text-slate-700 dark:text-slate-350 border-slate-200 dark:border-slate-800'}`}>
+            <div key={idx} className={`grid grid-cols-12 gap-4 px-5 py-4 items-center transition-colors group ${isMatch ? 'bg-indigo-50/50 dark:bg-indigo-950/20' : 'hover:bg-slate-50/80 dark:hover:bg-slate-800/20'}`}>
+              <div className="col-span-3 font-bold text-base truncate" title={item.key}>
+                <span className={`px-3 py-1.5 rounded-lg text-sm border-2 font-mono font-bold ${isMatch ? 'bg-indigo-100/70 border-indigo-300 text-indigo-800 dark:bg-indigo-900/30 dark:border-indigo-700 dark:text-indigo-300' : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border-slate-200 dark:border-slate-700'}`}>
                   {highlightText(item.key, searchTerm)}
                 </span>
               </div>
               <div 
-                className="col-span-7 text-xs text-slate-600 dark:text-slate-400 truncate font-mono cursor-pointer p-2 rounded-lg bg-slate-50/50 dark:bg-slate-950/40 border border-slate-100 dark:border-slate-850 shadow-none hover:bg-slate-100 dark:hover:bg-slate-850 transition-colors" 
+                className="col-span-7 text-sm text-slate-700 dark:text-slate-300 truncate font-mono cursor-pointer px-4 py-3 rounded-lg bg-slate-50 dark:bg-slate-900/60 border-2 border-slate-200 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-700 hover:bg-indigo-50/30 dark:hover:bg-indigo-950/20 transition-all" 
                 title={item.value}
                 onClick={() => onEdit(item)}
               >
                 {highlightText(item.value, searchTerm)}
               </div>
-              <div className="col-span-2 flex justify-end gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400" onClick={() => onEdit(item)}>
-                  {item.key.toLowerCase() === 'path' ? <FolderEdit className="h-4.5 w-4.5" /> : <Edit className="h-4.5 w-4.5" />}
+              <div className="col-span-2 flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <Button variant="ghost" size="icon" className="h-9 w-9 text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/30" onClick={() => onEdit(item)} title="编辑此变量">
+                  {item.key.toLowerCase() === 'path' ? <FolderEdit className="h-5 w-5" /> : <Edit className="h-5 w-5" />}
                 </Button>
-                <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-500 hover:text-red-500" onClick={() => onDelete(item.key)}>
-                  <Trash2 className="h-4.5 w-4.5" />
+                <Button variant="ghost" size="icon" className="h-9 w-9 text-slate-500 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30" onClick={() => onDelete(item.key)} title="删除此变量">
+                  <Trash2 className="h-5 w-5" />
                 </Button>
               </div>
             </div>
